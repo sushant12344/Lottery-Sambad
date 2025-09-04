@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test - Auto Loading</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-box { background: #f0f0f0; border: 1px solid #ccc; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .info { background: #d1ecf1; border-color: #bee5eb; color: #0c5460; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Debug Test - Auto Loading Functionality</h1>
+    
+    <div id="loading-status" class="debug-box">
+        <h3>Loading Status</h3>
+        <p>Initializing...</p>
+    </div>
+    
+    <div id="draws-data-status" class="debug-box">
+        <h3>Draws Data Status</h3>
+        <p>Checking...</p>
+    </div>
+    
+    <div id="auto-load-result" class="debug-box">
+        <h3>Auto Load Result</h3>
+        <p>Waiting for auto-load...</p>
+    </div>
+    
+    <div id="final-state" class="debug-box">
+        <h3>Final State</h3>
+        <p>Not loaded yet</p>
+    </div>
+
+    <!-- Load scripts in the same order as main site -->
+    <script src="draws-data.js"></script>
+    <script src="utils.js"></script>
+    
+    <script>
+        // Debug variables
+        let selectedDate = '';
+        let selectedTime = '13:00';
+        let prizeNumbers = {};
+        
+        // Debug function to update status
+        function updateStatus(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.className = `debug-box ${type}`;
+            element.innerHTML = `<h3>${element.querySelector('h3').textContent}</h3><p>${message}</p>`;
+        }
+        
+        // Debug function to show object as JSON
+        function showObject(elementId, title, obj) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<h3>${title}</h3><pre>${JSON.stringify(obj, null, 2)}</pre>`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('loading-status', 'DOM Content Loaded', 'success');
+            
+            // Check if allDrawsData is available
+            setTimeout(function() {
+                if (typeof allDrawsData !== 'undefined') {
+                    updateStatus('draws-data-status', `allDrawsData found with ${Object.keys(allDrawsData).length} entries`, 'success');
+                    showObject('draws-data-status', 'Draws Data Status', {
+                        available: true,
+                        keys: Object.keys(allDrawsData),
+                        sampleData: Object.keys(allDrawsData).length > 0 ? allDrawsData[Object.keys(allDrawsData)[0]] : null
+                    });
+                } else {
+                    updateStatus('draws-data-status', 'allDrawsData is not defined!', 'error');
+                }
+                
+                // Test auto-loading
+                testAutoLoad();
+            }, 200);
+        });
+        
+        async function testAutoLoad() {
+            updateStatus('auto-load-result', 'Starting auto-load test...', 'info');
+            
+            try {
+                // Test finding latest from draws data
+                if (typeof allDrawsData !== 'undefined' && Object.keys(allDrawsData).length > 0) {
+                    const latest = findLatestFromDrawsData();
+                    if (latest) {
+                        selectedDate = latest.date;
+                        selectedTime = latest.time;
+                        
+                        // Try to load the data
+                        const drawKey = `${selectedDate}_${selectedTime}`;
+                        if (allDrawsData[drawKey]) {
+                            prizeNumbers = allDrawsData[drawKey];
+                            updateStatus('auto-load-result', `Successfully auto-loaded: ${drawKey}`, 'success');
+                            showObject('final-state', 'Final Loaded Data', {
+                                selectedDate,
+                                selectedTime,
+                                drawKey,
+                                firstPrize: prizeNumbers.firstPrize,
+                                drawDate: prizeNumbers.drawDate,
+                                drawTime: prizeNumbers.drawTime
+                            });
+                        } else {
+                            updateStatus('auto-load-result', `Found latest key ${drawKey} but no data found`, 'error');
+                        }
+                    } else {
+                        updateStatus('auto-load-result', 'No latest data found from draws-data.js', 'error');
+                    }
+                } else {
+                    updateStatus('auto-load-result', 'allDrawsData not available for testing', 'error');
+                }
+            } catch (error) {
+                updateStatus('auto-load-result', `Error during auto-load: ${error.message}`, 'error');
+            }
+        }
+        
+        // Copy of the function from main script
+        function findLatestFromDrawsData() {
+            if (!allDrawsData || Object.keys(allDrawsData).length === 0) {
+                return null;
+            }
+            
+            const drawKeys = Object.keys(allDrawsData);
+            const parsedDates = drawKeys.map(key => {
+                const [dateStr, timeStr] = key.split('_');
+                const date = new Date(dateStr);
+                return {
+                    originalKey: key,
+                    date: date,
+                    dateStr: dateStr,
+                    timeStr: timeStr,
+                    timestamp: date.getTime() + getTimeWeight(timeStr)
+                };
+            }).filter(item => !isNaN(item.date.getTime()));
+            
+            // Sort by date and time (latest first)
+            parsedDates.sort((a, b) => b.timestamp - a.timestamp);
+            
+            if (parsedDates.length > 0) {
+                const latest = parsedDates[0];
+                return {
+                    date: latest.dateStr,
+                    time: latest.timeStr
+                };
+            }
+            
+            return null;
+        }
+        
+        function getTimeWeight(timeStr) {
+            switch (timeStr) {
+                case '13:00': return 1;
+                case '18:00': return 2;
+                case '20:00': return 3;
+                default: return 0;
+            }
+        }
+    </script>
+</body>
+</html>

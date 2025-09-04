@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Test - Prize Numbers</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mobile-optimization.css">
+    <style>
+        /* Additional test styles for demonstration */
+        .test-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .screen-width {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="screen-width" id="screen-width">Width: <span id="width-value"></span>px</div>
+    
+    <header>
+        <h1>Mobile Test - Prize Numbers</h1>
+        <p>Testing 360px and smaller screens</p>
+    </header>
+
+    <main>
+        <div class="test-info">
+            <p><strong>Test Purpose:</strong> Verify that prize numbers don't overflow on screens 360px and below</p>
+            <p><strong>Current Screen:</strong> <span id="current-width"></span>px</p>
+        </div>
+
+        <!-- Test 2nd Prize Section -->
+        <section class="prize-row" aria-label="Second Prize Results">
+            <div class="prize-info">
+                <strong>2nd Prize</strong>
+                <span>Winning Amount</span>
+                <strong>₹9,000/-</strong>
+            </div>
+            <div class="prize-numbers" id="second-prize-numbers">
+                <span>04347</span><span>17943</span><span>18402</span><span>21140</span><span>34235</span>
+                <span>47484</span><span>55668</span><span>85007</span><span>86622</span><span>98536</span>
+            </div>
+        </section>
+
+        <!-- Test 3rd Prize Section -->
+        <section class="prize-row" aria-label="Third Prize Results">
+            <div class="prize-info">
+                <strong>3rd Prize</strong>
+                <span>Winning Amount</span>
+                <strong>₹450/-</strong>
+            </div>
+            <div class="prize-numbers" id="third-prize-numbers">
+                <span>0480</span><span>1142</span><span>1510</span><span>4697</span><span>4888</span>
+                <span>5421</span><span>5786</span><span>6929</span><span>8269</span><span>9784</span>
+            </div>
+        </section>
+
+        <!-- Test 4th Prize Section -->
+        <section class="prize-row" aria-label="Fourth Prize Results">
+            <div class="prize-info">
+                <strong>4th Prize</strong>
+                <span>Winning Amount</span>
+                <strong>₹250/-</strong>
+            </div>
+            <div class="prize-numbers" id="fourth-prize-numbers">
+                <span>0718</span><span>1333</span><span>3925</span><span>3962</span><span>4938</span>
+                <span>5498</span><span>5616</span><span>7592</span><span>9550</span><span>9858</span>
+            </div>
+        </section>
+
+        <div class="test-info">
+            <p><strong>Instructions:</strong></p>
+            <ol style="text-align: left; max-width: 400px; margin: 0 auto;">
+                <li>Open browser developer tools (F12)</li>
+                <li>Click device toolbar icon (mobile icon)</li>
+                <li>Set width to 360px, 320px, 280px</li>
+                <li>Verify numbers stay within containers</li>
+                <li>Check that gaps are maintained</li>
+            </ol>
+        </div>
+    </main>
+
+    <script>
+        // Display current screen width
+        function updateScreenWidth() {
+            const width = window.innerWidth;
+            document.getElementById('width-value').textContent = width;
+            document.getElementById('current-width').textContent = width;
+            
+            // Add visual indicator for very small screens
+            if (width <= 360) {
+                document.body.style.border = '3px solid #ff4444';
+                document.querySelector('.test-info').innerHTML += 
+                    '<p style="color: #ff4444; font-weight: bold;">🔴 VERY SMALL SCREEN MODE ACTIVE</p>';
+            } else {
+                document.body.style.border = 'none';
+            }
+        }
+        
+        // Update on load and resize
+        window.addEventListener('load', updateScreenWidth);
+        window.addEventListener('resize', updateScreenWidth);
+        
+        // Initial call
+        updateScreenWidth();
+    </script>
+</body>
+</html>

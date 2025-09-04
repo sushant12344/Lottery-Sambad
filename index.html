@@ -1,0 +1,226 @@
+ <!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#667eea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Lottery Checker">
+  <meta name="description" content="Check your lottery results instantly. View winning numbers for all prize categories including 1st, 2nd, 3rd, 4th, and 5th prizes. Fast, accurate lottery number checker.">
+  <meta name="keywords" content="lottery results, winning numbers, prize check, lottery checker, draw results, winning tickets">
+  <meta name="author" content="Lottery Results Portal">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Lottery Results - Check Your Winning Numbers">
+  <meta property="og:description" content="Instant lottery results checker. Find out if you've won with our comprehensive prize verification system.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Lottery checker</title>
+  <link rel="stylesheet" href="common.css?v=20250831">
+  <link rel="stylesheet" href="styles.css?v=20250831">
+  <link rel="stylesheet" href="browser-compatibility.css?v=20250831">
+  <link rel="stylesheet" href="mobile-optimization.css?v=20250831">
+  <link rel="stylesheet" href="color-fix.css?v=20250831">
+  <link rel="stylesheet" href="loading-effects.css?v=20250831">
+  <link rel="canonical" href="https://yoursite.com/">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <h1>Nagaland State Lotteries</h1>
+    <p></p>
+  </header>
+  
+  <main>
+    <!-- Date and Time Selection -->
+    <section class="date-time-selection" aria-label="Select Date and Time">
+      <div class="selection-container">
+        <div class="date-selection">
+          <label for="date-picker">📅 Select Date:</label>
+          <div class="date-input-wrapper">
+            <input type="date" id="date-picker" />
+          </div>
+        </div>
+        
+        <div class="time-selection">
+          <label>⏰ Select Draw Time:</label>
+          <div class="time-buttons">
+            <button class="time-btn active" data-time="13:00">🕐 1:00 PM</button>
+            <button class="time-btn" data-time="18:00">🕕 6:00 PM</button>
+            <button class="time-btn" data-time="20:00">🕗 8:00 PM</button>
+          </div>
+        </div>
+      </div>
+      <div class="submit-container">
+        <button id="apply-selection-btn" class="submit-btn" type="button" onclick="loadSelectedDrawData()">Submit</button>
+      </div>
+    </section>
+
+    <section class="first-prize" aria-label="First Prize Results">
+      <h2>1st Prize Winner</h2>
+      <div class="number" id="first-prize-number">47L89944</div>
+      <div class="time" id="draw-datetime">19/08/2025 - 8:00 PM</div>
+    </section>
+    <section class="first-prize-desc" aria-label="Consolation Prize Information">
+      <p>Consolation Prize Amount: ₹1,000/- for <span id="consolation-number">89944</span> (all remaining Serial & Series of 1st Prize No.)</p>
+    </section>
+
+    <section class="prize-row" aria-label="Second Prize Results">
+      <div class="prize-info">
+        <strong>2nd Prize</strong>
+        <span>Winning Amount</span>
+        <strong>₹9,000/-</strong>
+      </div>
+      <div class="prize-numbers" id="second-prize-numbers">
+        <span>00107</span>
+        <span>50332</span>
+        <span>50810</span>
+        <span>51476</span>
+        <span>11505</span>
+        <span>41626</span>
+        <span>95865</span>
+        <span>16075</span>
+        <span>88181</span>
+        <span>39567</span>
+      </div>
+    </section>
+
+    <section class="prize-row" aria-label="Third Prize Results">
+      <div class="prize-info">
+        <strong>3rd Prize</strong>
+        <span>Winning Amount</span>
+        <strong>₹450/-</strong>
+      </div>
+      <div class="prize-numbers" id="third-prize-numbers">
+        <span>0359</span>
+        <span>1414</span>
+        <span>2406</span>
+        <span>3687</span>
+        <span>5178</span>
+        <span>6652</span>
+        <span>8095</span>
+        <span>8848</span>
+        <span>8868</span>
+        <span>9602</span>
+      </div>
+    </section>
+
+    <section class="prize-row" aria-label="Fourth Prize Results">
+      <div class="prize-info">
+        <strong>4th Prize</strong>
+        <span>Winning Amount</span>
+        <strong>₹250/-</strong>
+      </div>
+      <div class="prize-numbers" id="fourth-prize-numbers">
+        <span>0718</span>
+        <span>3673</span>
+        <span>4010</span>
+        <span>5158</span>
+        <span>7470</span>
+        <span>7617</span>
+        <span>8879</span>
+        <span>9176</span>
+        <span>9392</span>
+        <span>9789</span>
+      </div>
+    </section>
+
+    <section class="fifth-prize" aria-label="Fifth Prize Results">
+      <h3>5th Prize Winners - Amount: ₹120/-</h3>
+      <div class="fifth-prize-grid" id="fifth-prize-numbers">
+        <!-- Numbers will be loaded dynamically from JSON -->
+      </div>
+    </section>
+
+    <!-- AdSense Ad Unit 1 -->
+    <div class="ad-container">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <a href="#" class="download">Download</a>
+
+    <section class="ticket-checker" aria-label="Ticket Number Checker">
+      <h3>Check Your Ticket Number</h3>
+      <div class="input-group">
+        <label for="ticket-input" class="sr-only">Enter your ticket number</label>
+        <input type="text" id="ticket-input" placeholder="Enter your ticket number" aria-describedby="ticket-help">
+      </div>
+  
+      <div class="series-selection">
+        <h4>Select Your Series:</h4>
+        <div class="series-buttons">
+          <button class="series-btn active" data-series="5">📋 Series 5</button>
+          <button class="series-btn" data-series="10">📋 Series 10</button>
+          <button class="series-btn" data-series="25">📋 Series 25</button>
+          <button class="series-btn" data-series="50">📋 Series 50</button>
+          <button class="series-btn" data-series="100">📋 Series 100</button>
+          <button class="series-btn" data-series="200">📋 Series 200</button>
+        </div>
+      </div>
+      <button class="checknumberbtn" onclick="checkTicket()" type="button">Check My Ticket</button>
+      
+      <div id="result" aria-live="polite"></div>
+    </section>
+    
+    <!-- AdSense Ad Unit 2 -->
+    <div class="ad-container">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </main>
+
+  <footer>
+    <div style="text-align: center; margin-bottom: 15px;">
+      <a href="privacy-policy.html" style="margin: 0 10px; color: #666; text-decoration: none;">Privacy Policy</a> |
+      <a href="terms-of-service.html" style="margin: 0 10px; color: #666; text-decoration: none;">Terms of Service</a> |
+      <a href="contact.html" style="margin: 0 10px; color: #666; text-decoration: none;">Contact Us</a>
+    </div>
+    <p>&copy; 2024 Lottery Results Portal. All rights reserved.</p>
+    <p style="font-size: 0.9rem; color: #888;">This site is for informational purposes only. Always verify results with official sources.</p>
+  </footer>
+
+  <!-- Browser compatibility scripts -->
+  <script src="polyfills.js?v=20250831"></script>
+  <script src="utils.js?v=20250831"></script>
+  <script src="loading-utils.js?v=20250831"></script>
+  <script src="draws-data.js?v=20250831"></script>
+  
+  <!-- Detect if modern JS is supported, fallback to ES5 -->
+  <script>
+    // Feature detection for modern JS support
+    if (typeof Promise === 'undefined' || typeof fetch === 'undefined' || typeof Array.prototype.includes === 'undefined') {
+      // Load ES5 compatible version
+      document.write('<script src="script-es5.js?v=20250831_autofix"><\/script>');
+    } else {
+      // Load modern version
+      document.write('<script src="script.js?v=20250831_autofix"><\/script>');
+    }
+  </script>
+  
+  <!-- Fallback for very old browsers -->
+  <noscript>
+    <p>This website requires JavaScript to function properly. Please enable JavaScript in your browser.</p>
+  </noscript>
+</body>
+</html>

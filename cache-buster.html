@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottery Data Test</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <h1>Lottery Data Test</h1>
+    <div id="test-results"></div>
+    
+    <script src="draws-data.js?v=20250831"></script>
+    <script>
+        console.log('=== LOTTERY DATA TEST ===');
+        console.log('allDrawsData keys:', Object.keys(allDrawsData));
+        
+        // Find the latest entry
+        const keys = Object.keys(allDrawsData);
+        keys.sort((a, b) => {
+            const [dateA, timeA] = a.split('_');
+            const [dateB, timeB] = b.split('_');
+            const dateCompare = new Date(dateB) - new Date(dateA);
+            if (dateCompare !== 0) return dateCompare;
+            
+            const timeWeights = { '13:00': 1, '18:00': 2, '20:00': 3 };
+            return timeWeights[timeB] - timeWeights[timeA];
+        });
+        
+        const latestKey = keys[0];
+        const latestData = allDrawsData[latestKey];
+        
+        console.log('Latest key:', latestKey);
+        console.log('Latest data:', latestData);
+        
+        document.getElementById('test-results').innerHTML = `
+            <h2>Latest Lottery Data:</h2>
+            <p><strong>Key:</strong> ${latestKey}</p>
+            <p><strong>First Prize:</strong> ${latestData.firstPrize}</p>
+            <p><strong>Draw Date:</strong> ${latestData.drawDate}</p>
+            <p><strong>Draw Time:</strong> ${latestData.drawTime}</p>
+            <p><strong>Consolation:</strong> ${latestData.consolation}</p>
+            
+            <h3>Expected vs Actual:</h3>
+            <p><strong>Expected First Prize:</strong> 47L89944 (19/08/2025 8pm)</p>
+            <p><strong>Actual First Prize:</strong> ${latestData.firstPrize}</p>
+            <p><strong>Match:</strong> ${latestData.firstPrize === '47L89944' ? '✅ CORRECT' : '❌ WRONG'}</p>
+        `;
+    </script>
+</body>
+</html>

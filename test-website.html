@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Open Main Website</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; text-align: center; }
+        .test-link { 
+            display: inline-block; 
+            padding: 20px 40px; 
+            background: #4CAF50; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-size: 18px;
+            margin: 10px;
+        }
+        .test-link:hover { background: #45a049; }
+        .info { background: #e7f3ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>🎲 Lottery Website Test</h1>
+    
+    <div class="info">
+        <h3>Expected Latest Results:</h3>
+        <p><strong>First Prize:</strong> 86J26820</p>
+        <p><strong>Date:</strong> 22/08/2025</p>
+        <p><strong>Time:</strong> 1:00 PM</p>
+        <p><strong>Consolation:</strong> 26820</p>
+    </div>
+    
+    <p>Open your lottery website to test auto-loading:</p>
+    
+    <a href="index.html" class="test-link" target="_blank">🚀 Open Lottery Website</a>
+    
+    <div style="margin-top: 40px;">
+        <p><strong>What to check:</strong></p>
+        <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+            <li>✅ First prize should show: <strong>86J26820</strong></li>
+            <li>✅ Date should show: <strong>22/08/2025 - 1:00 PM</strong></li>
+            <li>✅ Date picker should be set to: <strong>2025-08-22</strong></li>
+            <li>✅ Time button "1:00 PM" should be highlighted</li>
+            <li>✅ All prize numbers should be populated</li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 30px; padding: 20px; background: #fff3cd; border-radius: 8px;">
+        <h4>🔍 Debug Instructions:</h4>
+        <p>1. Open the website</p>
+        <p>2. Press F12 to open Developer Tools</p>
+        <p>3. Go to Console tab</p>
+        <p>4. Look for auto-loading messages starting with 🎲 🚀 📊</p>
+        <p>5. Check if any errors appear in red</p>
+    </div>
+</body>
+</html>
